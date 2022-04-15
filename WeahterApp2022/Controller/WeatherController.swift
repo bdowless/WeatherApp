@@ -33,7 +33,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
             self.dailyWeatherTableView.reloadData()
             let currentDay = weatherArray[0]
             let currentTemperature = Int(currentDay.temp.day)
-            currentTemp.text = "\(currentTemperature)"
+            currentTemp.text = "\(currentTemperature)°"
         }
     }
     
@@ -41,7 +41,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor(white: 1, alpha: 0.25)
+        cv.backgroundColor = UIColor(red: 0, green: 0, blue: 255, alpha: 0.10)
         cv.layer.cornerRadius = 10
         cv.translatesAutoresizingMaskIntoConstraints = false
         return cv
@@ -69,14 +69,14 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         let label = UILabel()
         label.text = "Sunny"
         label.textColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 14)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
   
     let dailyWeatherTableView: UITableView = {
         let tableView = UITableView()
-        tableView.backgroundColor = UIColor(white: 1, alpha: 0.25)
+        tableView.backgroundColor = UIColor(red: 0, green: 0, blue: 220, alpha: 0.10)
         tableView.layer.cornerRadius = 10
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -105,7 +105,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if !locations.isEmpty, currentLocation == nil {
-            currentLocation = locations.first
+            currentLocation = locations.last
             locationManager.stopUpdatingLocation()
             requestWeatherForLocation()
          
@@ -191,4 +191,6 @@ extension WeatherController: UICollectionViewDelegateFlowLayout, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 50, height: 70)
     }
+    
 }
+

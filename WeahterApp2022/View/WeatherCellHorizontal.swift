@@ -57,6 +57,16 @@ class WeatherCellHorizontal: UITableViewCell {
         return label
     }()
     
+    var thermometerIcon: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "thermometer.sun.fill")
+        image.tintColor = .systemOrange
+        image.contentMode = .scaleAspectFill
+        image.widthAnchor.constraint(equalToConstant: 28) .isActive = true
+        image.translatesAutoresizingMaskIntoConstraints = false
+        return image
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         configureUI()
@@ -72,7 +82,7 @@ class WeatherCellHorizontal: UITableViewCell {
     func configureUI() {
         guard let daily = daily else { return }
         
-        let stack = UIStackView(arrangedSubviews: [date, weatherIcon, temp])
+        let stack = UIStackView(arrangedSubviews: [date, weatherIcon, temp, thermometerIcon])
         stack.axis = .horizontal
         stack.spacing = 30
         stack.contentMode = .scaleAspectFill
@@ -83,7 +93,8 @@ class WeatherCellHorizontal: UITableViewCell {
         stack.topAnchor.constraint(equalTo: topAnchor, constant: 30) .isActive = true
         stack.rightAnchor.constraint(equalTo: rightAnchor, constant: -20) .isActive = true
         
-        temp.text = "\(daily.temp.day) F"
+        let temperature = Int(daily.temp.day)
+        temp.text = "\(temperature) F°"
         weatherDescription.text = daily.weather.description
         
 

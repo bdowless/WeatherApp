@@ -37,7 +37,7 @@ struct WeatherViewModel {
         case 800:
             return UIImage(systemName: "sun.max")
         default:
-            return UIImage(systemName: "sun.max.circle")
+            return UIImage(systemName: "cloud.sun.fill")
         }
     }
     
