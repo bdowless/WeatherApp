@@ -10,8 +10,6 @@ import UIKit
 
 class WeatherCellHorizontal: UITableViewCell {
     
-    let weatherAPI = WeatherAPI()
-    
     let viewModel = WeatherViewModel()
     
     var daily: Daily? {
@@ -19,6 +17,7 @@ class WeatherCellHorizontal: UITableViewCell {
             configureUI()
         }
     }
+    
     
     var temp: UILabel = {
         let label = UILabel()
@@ -49,11 +48,7 @@ class WeatherCellHorizontal: UITableViewCell {
     }()
     
     var date: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.boldSystemFont(ofSize: 16)
-        label.textColor = .white
-        label.text = ""
-        label.translatesAutoresizingMaskIntoConstraints = false
+        let label = createUILabel()
         return label
     }()
     
@@ -115,6 +110,24 @@ class WeatherCellHorizontal: UITableViewCell {
     }
 }
 
+extension UILabel {
+    func newLabel() {
+        let label = UILabel()
+        label.text = "Testing"
+        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+    }
+}
+
+func createUILabel() -> UILabel {
+    let label = UILabel()
+    label.text = "Testing"
+    label.font = UIFont.boldSystemFont(ofSize: 16)
+    label.textColor = .white
+    label.translatesAutoresizingMaskIntoConstraints = false
+    return label
+}
 
 
 

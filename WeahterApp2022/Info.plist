@@ -23,5 +23,7 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Please Allow Location to see local weather</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Location is always in use </string>
 </dict>
 </plist>

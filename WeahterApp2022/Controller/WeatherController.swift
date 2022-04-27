@@ -9,6 +9,10 @@ import Foundation
 import UIKit
 import CoreLocation
 
+enum handleError: Error {
+    case error
+}
+
 class WeatherController: UIViewController, CLLocationManagerDelegate {
     
     var locationManager = CLLocationManager()
@@ -18,6 +22,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
     let reuseIdentifier = "Cell"
     
     
+    
     var hourlyWeatherArray = [Hourly]() {
         didSet {
             self.hourlyCollectionView.reloadData()
@@ -25,6 +30,8 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
             let hourly = hourlyWeatherArray[0]
             let weather = hourly.weather[0]
             weatherDescription.text = weather.description
+            let currentTempInt = Int(hourly.temp)
+            currentTemp.text = "\(currentTempInt)"
         }
     }
     
@@ -33,7 +40,7 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
             self.dailyWeatherTableView.reloadData()
             let currentDay = weatherArray[0]
             let currentTemperature = Int(currentDay.temp.day)
-            currentTemp.text = "\(currentTemperature)°"
+//            currentTemp.text = "\(currentTemperature)°"
         }
     }
     
@@ -127,7 +134,27 @@ class WeatherController: UIViewController, CLLocationManagerDelegate {
         weatherModel.hourlyWeatherAPI(lat: lat, long: long) { hourly in
             self.hourlyWeatherArray = hourly
         }
+        getPlace(for: currentLocation) { placemark in
+            self.city.text = placemark?.locality
+        }
+
     }
+    
+    func getPlace(for location: CLLocation, completion: @escaping (CLPlacemark?) -> Void) {
+        guard let currentLocation = currentLocation else { return }
+
+                let geoLocation = CLGeocoder()
+                geoLocation.reverseGeocodeLocation(currentLocation) { placemarks, error in
+                    if let error = error {
+                        print("DEBUG: we have \(error)")
+                    }
+                        guard let placeMarks = placemarks?[0] else { return }
+                    print("DEBUG123: \(placeMarks.country)")
+                    completion(placeMarks)
+                    }
+    }
+    
+
     
     // MARK: - Helpers
     
